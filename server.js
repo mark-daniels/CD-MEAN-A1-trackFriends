@@ -9,6 +9,6 @@ var app = express();
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/client')));
 app.listen(8000, function() {
-	console.log('cool stuff on: 8000');
+	console.log('cool things on: 8000');
 });
 
