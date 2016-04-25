@@ -1,7 +1,7 @@
 {
     "name": "mean_track-friends",
     "version": "1.0.0",
-    "description": "A single page app to track and add friends",
+    "description": "A single page app to track & add friends",
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
