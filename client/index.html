@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="friends_app">
+<head>
+	<meta charset="UTF-8">
+	<title>CD MEAN Assignment: Track & Add friends</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	<script type="text/javascript">
+		var friends_app = angular.module('friends_app', []);
+		friends_app.controller('FriendsController', function($scope) {
+			$scope.friends = [{name: "Michael", age: 34}, {name: "Andrew", age:24}];
+			$scope.addfriend = function() {
+				$scope.friends.push({name: $scope.new_friend.name, age: $scope.new_friend.age});
+				$scope.new_friend = {};
+			}
+		});
+	</script>
+</head>
+<body ng-controller="FriendsController">
+	<div id="wrapper">
+		<form>
+			<h1>Friends</h1>
+			<input type="text" ng-model="filter_name" placeholder="filter">
+			<p>{{filter_name}}</p>
+			<ul>
+				<li ng-repeat="friend in friends | filter: filter_name">
+					{{friend.name}}, {{friend.age}}
+				</li>
+			</ul>
+			<h1>Add a friend</h1>
+			<input type="text" ng-model="new_friend.name" placeholder="name">
+			<input type="text" ng-model="new_friend.age" placeholder="age">
+			<input type="submit" ng-click="addfriend()">
+		</form>
+	</div>
+</body>
+</html>
