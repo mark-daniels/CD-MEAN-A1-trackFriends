@@ -1,7 +1,16 @@
+var mongoose = require('mongoose');
+var Friend = mongoose.model('friend');
+
 module.exports = (function() {
 	return {
 		index: function(req, res) {
-			res.json([{name: "Andrew", age: 25}, {name: "Michael", age: 35}]);
+			Friend.find({}, function(err, results) {
+				if (err) {
+					console.log(err);
+				} else {
+					res.json(results);
+				}
+			})
 		}
 	}
 })();
