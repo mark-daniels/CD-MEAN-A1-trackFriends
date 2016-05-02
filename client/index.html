@@ -9,33 +9,38 @@
 		var friends_app = angular.module('friends_app', []);
 
 		friends_app.controller('FriendsController', function($scope, FriendFactory) {
-			FriendFactory.index(function(data) {
-				$scope.friends = data;
-			});
+			$scope.friends = [];
+
+			$scope.show = function() {
+				FriendFactory.index(function(output) {
+					$scope.friends = output;
+				});
+			};
 
 			$scope.addfriend = function() {
-				FriendFactory.create($scope.new_friend, function(friends) {
-					$scope.friends = friends;
+				FriendFactory.create($scope.new_friend, function(friend) {
+					$scope.friends.push(friend);
+					$scope.show();
 					$scope.new_friend = {};
 				});
-			}
+			};
 		});
 
 		friends_app.factory('FriendFactory', function($http) {
 			var factory = {};
-			var friends = [];
 
 			factory.index = function(callback) {
 				$http.get('/friends').success(function(output) {
-					friends = output;
-					callback(friends);
+					callback(output);
 				});
-			}
+			};
 
-			factory.create = function(info, callback) {
-				friends.push({name: info.name, age: info.age});
-				callback(friends);
-			}
+			factory.create = function(input, callback) {
+				$http.post('/friends', input).success(function(output) {
+					callback(output);
+				});
+			};
+
 			return factory;
 		});
 	</script>
@@ -44,6 +49,8 @@
 	<div id="wrapper">
 		<form>
 			<h1>Friends</h1>
+			<a href="#" ng-click="show()">Show existing friends</a>
+
 			<input type="text" ng-model="filter_name" placeholder="filter">
 			<p>{{filter_name}}</p>
 			<ul>
@@ -52,8 +59,8 @@
 				</li>
 			</ul>
 			<h1>Add a friend</h1>
-			<input type="text" ng-model="new_friend.name" placeholder="name">
-			<input type="text" ng-model="new_friend.age" placeholder="age">
+			<input type="text" ng-model="new_friend.name" placeholder="name" name="name">
+			<input type="text" ng-model="new_friend.age" placeholder="age" name="age">
 			<input type="submit" ng-click="addfriend()">
 		</form>
 	</div>

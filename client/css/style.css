@@ -49,7 +49,7 @@ form {
     form ul {
         list-style: none;
     }
-    form ul li, form p {
+    form ul li, form p, a {
         margin-left: 1.625em;
     }
     form p {
