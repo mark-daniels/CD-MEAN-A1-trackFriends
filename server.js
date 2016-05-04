@@ -15,6 +15,6 @@ require('./server/config/routes.js')(app);
 
 // LISTEN
 app.listen(process.env.PORT || 5000, function() {
-	console.log('cool stuff on: 8000');
+	console.log('cool stuff on: 5000');
 });
 
