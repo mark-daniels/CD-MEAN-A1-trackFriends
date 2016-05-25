@@ -24,6 +24,13 @@
 					$scope.new_friend = {};
 				});
 			};
+
+			$scope.deletefriend = function(thisFriend) {
+				FriendFactory.delete(thisFriend, function(output) {
+					var index = $scope.friends.indexOf(thisFriend);
+					$scope.friends.splice(index, 1);
+				});
+			};
 		});
 
 		friends_app.factory('FriendFactory', function($http) {
@@ -41,6 +48,11 @@
 				});
 			};
 
+			factory.delete = function(input, callback) {
+				$http.delete('/friends/' + input._id).success(function(output) {
+					callback(output);
+				});
+			};
 			return factory;
 		});
 	</script>
@@ -55,6 +67,7 @@
 			<p>{{filter_name}}</p>
 			<ul>
 				<li ng-repeat="friend in friends | filter: filter_name">
+					<button type="button" name="deleteFriend" ng-model="delete_friend" ng-click="deletefriend(friend)">Delete</button>
 					{{friend.name}}, {{friend.age}}
 				</li>
 			</ul>

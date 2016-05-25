@@ -5,7 +5,11 @@ module.exports = function(app) {
 		friends.index(req, res);
 	});
 
-	app.post('/friends', function(req, res){
+	app.post('/friends', function(req, res) {
 		friends.create(req, res);
+	});
+
+	app.delete('/friends/:id', function(req, res) {
+		friends.delete(req, res);
 	});
 };
